@@ -1,0 +1,49 @@
+
+//=== cancelMemberDialog ===
+    private void cancelMemberDialog(String _gid,String _username,String _groupname,String _addgroup_dt){
+     
+     // carry forwords the valueOf _gid, _username, _groupname, _addgroup_dt 
+     Log.d(TAG,"cancelMemberDialog():"+"gid="+ _gid.toString()+",_username="+_username.toString()
+                       +",_groupname="+_groupname.toString()+",_addgroup_dt"+_addgroup_dt.toString());
+              
+        cancelMemberBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        cancelMemberBuilder.setIcon(getResources().getDrawable(android.R.drawable.ic_menu_close_clear_cancel));
+        cancelMemberBuilder.setTitle("Delete Member From Your Group ?");
+       
+       // value of _username and _groupname show in dialog  
+        cancelMemberBuilder.setMessage("Group"+_groupname+ member:"+_username+", Are you sure, Delete ? ");
+        cancelMemberBuilder.setPositiveButton("Delete", cancelMemberListener);
+        cancelMemberBuilder.setNegativeButton("Back", cancelMemberListener);
+        cancelMemberBuilder.setCancelable(false);
+        cancelMemberBuilder.show();
+    }
+
+    // 設定likeClickListener監視器
+    DialogInterface.OnClickListener cancelMemberListener = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int id) {
+            switch (id) {
+                case BUTTON_POSITIVE:
+                    Toast.makeText(getApplicationContext()," delete member ",Toast.LENGTH_SHORT).show();
+                    
+                    //==> not find value ==> _gid ?? //
+                    String _gid = valueOf(_Gid).toString();           
+                    Log.d(TAG,"cancelMemberListener->_server="+_server+",_gid="+_gid);
+                      
+                    String _login_server_path = edtServer.getText().toString();                  
+                    String _server = _login_server_path + "/delete_group_person.php";
+                    
+                    try { 
+                    new deleteMemberAST(getApplicationContext()).execute(_server,_gid);
+                    } catch (SecurityException e) {
+                    e.printStackTrace();
+                        Log.d(TAG, "cancelMemberdListener->SecurityException !");
+                        }                      
+                    break;
+               
+                case DialogInterface.BUTTON_NEGATIVE:
+                    Toast.makeText(getApplicationContext()," Back ",Toast.LENGTH_SHORT).show();
+                    Log.d(TAG," DialogInteface.onClickListener => BUTTON_NEGATIVE => onClick ");
+                    break;
+            }// switch()
+        } // onClick()
+    }; // onClickListener
