@@ -18,7 +18,7 @@
         cancelMemberBuilder.show();
     }
 
-    // 設定likeClickListener監視器
+    //OnClickListener
     DialogInterface.OnClickListener cancelMemberListener = new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int id) {
             switch (id) {
